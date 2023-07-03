@@ -1,18 +1,33 @@
-function addToDisplay(value) {
-    document.getElementById("display").value += value;
-}
+// Add click event listeners to all buttons
+document.querySelectorAll("#calculator button").forEach(button => {
+  button.addEventListener("click", handleButtonClick);
+});
 
-function clearDisplay() {
-    document.getElementById("display").value = "";
-}
-
-function clearOneCharacter() {
-    var displayValue = document.getElementById("display").value;
-    document.getElementById("display").value = displayValue.slice(0, -1);
-}
-
-function calculate() {
-    var displayValue = document.getElementById("display").value;
-    var result = eval(displayValue);
-    document.getElementById("display").value = result;
+// Function to handle button clicks
+function handleButtonClick(event) {
+  const buttonId = event.target.id;
+  const display = document.getElementById("display");
+  
+  switch (buttonId) {
+    case "C":
+      // Clear the display
+      display.value = "";
+      break;
+    case "back":
+      // Remove the last character from display
+      display.value = display.value.slice(0, -1);
+      break;
+    case "equal":
+      // Evaluate the expression and display the result
+      try {
+        display.value = eval(display.value);
+      } catch (error) {
+        display.value = "Error";
+      }
+      break;
+    default:
+      // Append the button value to the display
+      display.value += buttonId;
+      break;
+  }
 }
